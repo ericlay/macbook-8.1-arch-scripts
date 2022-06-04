@@ -1,0 +1,40 @@
+#!/bin/bash
+
+Help() {
+	echo
+	echo "syntax: kbd [opt]"
+	echo
+	echo "-m / --max is all the way up"
+	echo
+	echo "-o / --off is all the way down"
+	echo
+	echo "-l / --low is almost off"
+	echo
+	echo "-u / --up is up"
+	echo
+	echo "-d / --down is down"
+	echo
+}
+
+for opt in "$@"; do
+	case $opt in
+		-m|--max)
+			brightnessctl --device='smc::kbd_backlight' set 255
+			;;
+		-l|--low)
+			brightnessctl --device='smc::kbd_backlight' set 5
+			;;
+		-o|--off)
+			brightnessctl --device='smc::kbd_backlight' set 0
+			;;
+		-u|--up)
+			brightnessctl --device='smc::kbd_backlight' set +50
+			;;
+		-d|--down)
+			brightnessctl --device='smc::kbd_backlight' set 50-
+			;;
+		-*)
+			Help
+			;;
+	esac
+	done
